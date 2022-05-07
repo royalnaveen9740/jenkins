@@ -17,8 +17,8 @@ pipeline {
             }
         
         }
-    stages{
-        steps('Condition')
+    
+        stage('Condition')
             steps{
                 if (env.BRANCH_NAME == 'master' || currentBuild == 'SUCCESS'){
                     echo 'Executed from master branch and job is sucessfull'}
@@ -26,7 +26,5 @@ pipeline {
                     echo 'Neither code is executed from master branch nor job is successfull'
                 }
             }   
-                
-        }
-               
-    }
+
+}
