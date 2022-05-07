@@ -14,7 +14,7 @@ pipeline {
                 sh 'echo job is successfull'
             }
         }
-        stage('Condition')
+        stage('Condition') {
             if (env.BRANCH_NAME == 'master'){
                 echo 'Executed from master branch and job is sucessfull'}
             else {
