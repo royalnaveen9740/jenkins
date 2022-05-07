@@ -9,10 +9,12 @@ pipeline {
               expression {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
-            }
+            }  
+        }
+    
             steps {
-                sh 'echo job is successfull'
-            }
+                    sh 'echo job is successfull'
+                }
         }
         stage('Condition') {
             if (env.BRANCH_NAME == 'master'){
