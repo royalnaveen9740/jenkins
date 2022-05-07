@@ -11,7 +11,7 @@ pipeline {
               }
             }
             steps {
-                sh 'make publish'
+                sh 'echo job is successfull'
             }
         }
     }
