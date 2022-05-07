@@ -15,14 +15,4 @@ pipeline {
             }
         }
     }
-
-    stages {
-        stage('Condition')
-            if (env.BRANCH_NAME == 'master' || currentBuild == 'SUCCESS'){
-                echo 'Executed from master branch and job is sucessfull'}
-            else {
-                echo 'Neither code is executed from master branch nor job is successfull'
-            }
-        
-    }
 }
