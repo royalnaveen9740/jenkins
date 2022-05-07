@@ -9,15 +9,16 @@ pipeline {
               expression {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
-            }  
-        }
-    
+            }
             steps {
-                    sh 'echo job is successfull'
-                }
+                sh "echo This build is success"
+            }
         }
-        stage('Condition') {
-            if (env.BRANCH_NAME == 'master'){
+    }
+
+    stages {
+        stage('Condition')
+            if (env.BRANCH_NAME == 'master' || currentBuild == 'SUCCESS'){
                 echo 'Executed from master branch and job is sucessfull'}
             else {
                 echo 'Neither code is executed from master branch nor job is successfull'
