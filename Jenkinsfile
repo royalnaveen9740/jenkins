@@ -1,14 +1,13 @@
 pipeline {
-  agent any
-  parameters {
-    string(name: 'STATEMENT', defaultValue: 'hello; ls /', description: 'What should I say?')
-  }
-  stages {
-    stage('Example') {
-      steps {
-        /* CORRECT */
-        sh('echo ${STATEMENT}')
-      }
+    agent any
+    parameters {
+        string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
     }
-  }
+    stages {
+        stage('Example') {
+            steps {
+                echo "${params.Greeting} World!"
+            }
+        }
+    }
 }
