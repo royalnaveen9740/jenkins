@@ -1,24 +1,13 @@
 pipeline {
-    agent any 
+    agent any
     environment {
-        // Using returnStdout
-        CC = """${sh(
-                returnStdout: true,
-                script: 'echo "clang"'
-            )}""" 
-        // Using returnStatus
-        EXIT_STATUS = """${sh(
-                returnStatus: true,
-                script: 'exit 1'
-            )}"""
+        EXAMPLE_CREDS = credentials('example-credentials-id')
     }
     stages {
         stage('Example') {
-            environment {
-                DEBUG_FLAGS = '-g'
-            }
             steps {
-                sh 'printenv'
+                /* WRONG! */
+                sh("curl -u ${EXAMPLE_CREDS_USR}:${EXAMPLE_CREDS_PSW} https://example.com/")
             }
         }
     }
