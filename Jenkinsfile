@@ -6,8 +6,8 @@ pipeline {
   stages {
     stage('Example') {
       steps {
-        /* WRONG! */
-        sh("echo ${STATEMENT}")
+        /* CORRECT */
+        sh('echo ${STATEMENT}')
       }
     }
   }
