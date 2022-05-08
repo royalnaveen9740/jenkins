@@ -1,30 +1,25 @@
-#!/usr/bin/envgroovy
-
 pipeline {
-    agent any
-
+    agent any 
+    environment {
+        // Using returnStdout
+        CC = """${sh(
+                returnStdout: true,
+                script: 'echo "clang"'
+            )}""" 
+        // Using returnStatus
+        EXIT_STATUS = """${sh(
+                returnStatus: true,
+                script: 'exit 1'
+            )}"""
+    }
     stages {
-        stage('Deploy') {
-            when {
-              expression {
-                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
-              }
+        stage('Example') {
+            environment {
+                DEBUG_FLAGS = '-g'
             }
             steps {
-                sh "echo This build is success"
-                }
-
+                sh 'printenv'
             }
-        
         }
-    
-        stage('Condition')
-            steps{
-                if (env.BRANCH_NAME == 'master' || currentBuild == 'SUCCESS'){
-                    echo 'Executed from master branch and job is sucessfull'}
-                else {
-                    echo 'Neither code is executed from master branch nor job is successfull'
-                }
-            }   
-
+    }
 }
