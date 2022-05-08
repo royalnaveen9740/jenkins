@@ -3,7 +3,7 @@ pipeline {
     environment {
         // Using returnStdout
         CC = """${sh(
-                returnStdout: true.trim(),
+                returnStdout: true,
                 script: 'echo "clang"'
             )}""" 
         // Using returnStatus
