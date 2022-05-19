@@ -1,34 +1,24 @@
-pipeline{
+pipeline {
     agent any
-    tools{
+    tools {
         maven 'Maven'
     }
-    stages{
-        stage("Test"){
-            steps{
+    stages {
+        stage("Test") {
+            steps {
                 sh 'mvn test'
             }
         }
-        stage("Build"){
-            steps{
+        stage("Build") {
+            steps {
                 sh 'mvn package'
             }
         }
-        stage("Deploy on Tomcat"){
-            steps{
+        stage("Deploy on Tomcat") {
+            steps {
                 deploy adapters: [tomcat9(credentialsId: 'credentialForTomcatAdmin', path: '', url: 'http://192.168.23.131:8081')], contextPath: '/myapp', war: '**/*.war'
             }
-        }
- 
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
-        }
+        }    
     }
+
 }
