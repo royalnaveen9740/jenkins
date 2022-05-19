@@ -1,21 +1,34 @@
-pipeline {
-    agent { docker { image 'maven:3.8.4-openjdk-11-slim' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'mvn --version'
+pipeline{
+    agent any
+    tools{
+        maven 'Maven'
+    }
+    stages{
+        stage("Test"){
+            steps{
+                sh 'mvn test'
             }
         }
-    }
-}
-
-pipeline {
-    agent { docker { image 'node:16.13.1-alpine' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'node --version'
+        stage("Build"){
+            steps{
+                sh 'mvn package'
             }
+        }
+        stage("Deploy on Tomcat"){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'credentialForTomcatAdmin', path: '', url: 'http://192.168.23.131:8081')], contextPath: '/myapp', war: '**/*.war'
+            }
+        }
+ 
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
         }
     }
 }
